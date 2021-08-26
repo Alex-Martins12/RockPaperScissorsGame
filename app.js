@@ -4,12 +4,9 @@ let computerScore = 0;
 let language = "eng";
 
 //DOM variables
-//caching the DOM
-//to show to our document (DOM):
-//to do that, we use the id of the html element!
 const userScore_span = document.getElementById("user-score");
 const computerScore_span = document.getElementById("computer-score");
-// ".result > p" because the text we want to change is inside a p tag!!
+//querySelector => returns the first element within the document that matches the specified selector, or group of selectors. If no matches are found, null is returned.
 const result_p = document.querySelector(".result > p");
 const rock_div = document.getElementById("r");
 const paper_div = document.getElementById("p");
@@ -32,22 +29,8 @@ function getComputerChoice() {
 
     const choices = ['r', 'p', 's'];
 
-    //Math is a object that's already built in JavaScript, and one of its methods is a method called random. This method gives us a random number between 0 and 1, never reaching 1, like this:
-    //0.3412835707114079
-    //0.7092038094188242
-    //and so on...
-    //but, that still doesn't help us, we'd need a random number between 0, 1 and 2
-    //so, if we multiply the random number by 3, it'll always be a random number between 0, 1 and 2, never reaching three!
-    //let's say you need to get a random number between 0 and 11, you just need to do this:
-    //Math.random() * 12;
-    //it'll never reach 12, and so you'll get a random number between 0 and 11!
-
-    //now, we just need to round the integer to be a whole number, like this:
-    //Math.floor(Math.random() * 3);
-
-    //floor method: The Math.floor() function returns the largest integer less than or equal to a given number.
-
-    //store the random number in a variable
+    //Math.random returns a randon number between 0 and 1, so we just need to multiply the returned value for the number of options we have (3)
+    //Then we just need the result to be a whole number (integer), and we do that using Math.floor
     const randomNumber = Math.floor(Math.random() * 3);
 
     //return one of the three options
@@ -57,7 +40,7 @@ function getComputerChoice() {
 
 
 function convertToWord(letter, lang) {
-    // a easier way to write if/else statements:
+
     if (lang === "eng") {
         if (letter === "r") return "Rock";
         if (letter === "p") return "Paper";
@@ -73,8 +56,7 @@ function convertToWord(letter, lang) {
 function getMessage(user, comp, lang) {
 
     //to change the font-size of something in javascript, just write: .fontsize($number);
-    //the sup(); / sub(); methods:
-    //they supscript or subscript some text (supscript = moves half a line up, comparing to the text on its line), and (subscript = moves half a line down, comparing to the text on its line)
+    //.sup() => it superscripts the string (pushes the string a litlle bit higher comparing to the line)
     const smallUserWord = "user".fontsize(3).sup();
     const smallCompWord = "comp".fontsize(3).sup();
     const smallUserPt = "jogador".fontsize(3).sup();
@@ -90,7 +72,7 @@ function getMessage(user, comp, lang) {
         //Paper covers Rock
         switch (user + comp) {
 
-            //wins first:
+            //wins:
             case "rs":
                 //Rock crushes Scissors
                 message = "crushes";
@@ -111,6 +93,7 @@ function getMessage(user, comp, lang) {
             case "sr":
                 //Rock crushes Scissors
                 message = "crushes";
+                // if the user loses, it won't display what the user picked first
                 userFirst = false;
                 break;
 
@@ -141,7 +124,7 @@ function getMessage(user, comp, lang) {
                 break;
         }
 
-        //returns the message
+        //returns the message (eng)
         if (userFirst === true) {  
 
             return `${convertToWord(user, lang)}${smallUserWord} ${message} ${convertToWord(comp, lang)}${smallCompWord}.`;
@@ -218,42 +201,29 @@ function getMessage(user, comp, lang) {
 }
 
 
-
-// set timeout function example:
-//it'll wait 3s until it executes the function
-// setTimeout(function() { console.log("Hello")}, 3000);
 function win(userChoice, computerChoice, lang) {
 
     const userChoice_div = document.getElementById(userChoice);
 
-    //the first thing we want to do is increase the user score, cause he won!
     userScore ++;
     
     //update the user score on the page
     userScore_span.innerHTML = userScore;
     //update the comp score on the page
-    computerScore_span.innerHTML = computerScore;
+    // computerScore_span.innerHTML = computerScore;
 
-    //now we display the message of who won in the result_p element:
-    //what I wrote:
-    // result_p.innerHTML = convertToWord(userChoice) + " beats " + convertToWord(ComputerChoice) +". You win! ";
-    //a better way of writing strings and functions/variables in the same line, using backticks (`):
-    //result_p.innerHTML = `${convertToWord(userChoice)}${smallUserWord} beats  ${convertToWord(computerChoice)}${smallCompWord}. You won!`;
+    //Displays the message of who won in the result_p element depending on the lang selected
     if (lang === "eng") {
         result_p.innerHTML = `${getMessage(userChoice, computerChoice, lang)} You win!`;
     } else {
         result_p.innerHTML = `${getMessage(userChoice, computerChoice, lang)} Você venceu!`;
     }
 
-    //when the user wins, add a green-glow to the border of the option picked!!
-    //to do that, were just gonna add a class of .green-glow to whichever div the user clicked on
-    // method classList: returns an array with all the classes that element has, and with .add, we can add another class to it.
+    //when the user wins, it adds a green-glow to the border of the option picked
+    //.classList: returns an array with all the classes that element has, and with .add, we can add another class to it
     userChoice_div.classList.add('green-glow');
 
-    //but how do we set the border green, and then turn it back to white right after?
-    //we do that, using a set timeout function in JavaScript
-    // so now, we'll just wait a bit, and then remove that class we just added
-    //to remove a class of a html element, we just need to use the method .remove
+    //it uses the function setTimeout to add a delay before removing the green border 
     setTimeout(function() {userChoice_div.classList.remove('green-glow'); }, 500);
 }
 
@@ -266,12 +236,13 @@ function lose(userChoice, computerChoice, lang) {
     userScore_span.innerHTML = userScore;
     computerScore_span.innerHTML = computerScore;
 
-    // result_p.innerHTML = `${convertToWord(userChoice)}${smallUserWord} loses to  ${convertToWord(computerChoice)}${smallCompWord}. You lost...`;
+
     if (lang === "eng") {
         result_p.innerHTML = `${getMessage(userChoice, computerChoice, lang)} You lost...`;
     } else {
         result_p.innerHTML = `${getMessage(userChoice, computerChoice, lang)} Você perdeu...`;
     }
+
 
     //adds the glow to the user choice
     userChoice_div.classList.add('red-glow');
@@ -285,15 +256,13 @@ function lose(userChoice, computerChoice, lang) {
 function draw(userChoice, computerChoice, lang) {
 
     const userChoice_div = document.getElementById(userChoice);
-    
-    // result_p.innerHTML = `${convertToWord(userChoice)}${smallUserWord} equals  ${convertToWord(ComputerChoice)}${smallCompWord}. It's a draw!`;
+
     if (lang === "eng") {
         result_p.innerHTML = `${getMessage(userChoice, computerChoice, lang)} It's a draw!`;
     } else {
         result_p.innerHTML = `${getMessage(userChoice, computerChoice, lang)} Empatou!`;
     }
     
-    //adds the glow to the user choice
     userChoice_div.classList.add('gray-glow');
     setTimeout(() => userChoice_div.classList.remove('gray-glow'), 500);
 }
@@ -301,48 +270,56 @@ function draw(userChoice, computerChoice, lang) {
 
 function changeLang(lang) {
     
-    //returns true or false:
-    //element.classList.contains(class);
     switch (lang) {
 
         case "pt":
 
-            language = "pt";
-
+            //element.classList.contains(class) => checks if the element has a class applied to it
             if (pt_div.classList.contains('active') === false) {
                 pt_div.classList.add('active');
                 eng_div.classList.remove('active');
+                //updates the variable that's outside this function
+                language = "pt";
             }
             break;
 
+
         case "eng":
-            
-            language = "eng";
 
             if (eng_div.classList.contains('active') === false) {
                 eng_div.classList.add('active');
                 pt_div.classList.remove('active');
+                language = "eng";
             }
             break;
     }
 
-    //now we just need to change the text on the page according to the language selected
-
-    /*
-    rockpaperscissors (header) => header_h1
-
-    user/comp inside the badges
-    //user => badgeUser_div
-    //comp => badgeComp_div
-
-    main message/who won => result_p
-
-    make your move => actionMsg_p
-
-    select your language => hint_h1
-
-    buttons => pt_btn, eng_btn
-    */
+    // Updates the text that's on the page depending on the language selected
+    switch (language) {
+        case "pt":
+            
+            header_h1.innerHTML = "Pedra Papel Tesoura";
+            badgeUser_div.innerHTML = "jogador";
+            badgeComp_div.innerHTML = "pc";
+            result_p.innerHTML = "Papel embrulha Pedra. Você venceu!";
+            actionMsg_p.innerHTML = "Faça sua jogada:";
+            hint_h1.innerHTML = "Selecione o idioma";
+            pt_btn.innerHTML = "Português";
+            eng_btn.innerHTML = "Inglês";
+            break;
+        
+        case "eng":
+            
+            header_h1.innerHTML = "Rock Paper Scissors";
+            badgeUser_div.innerHTML = "user";
+            badgeComp_div.innerHTML = "comp";
+            result_p.innerHTML = "Paper covers rock. You win!";
+            actionMsg_p.innerHTML = "Make your move:";
+            hint_h1.innerHTML = "Select your language";
+            pt_btn.innerHTML = "Portuguese";
+            eng_btn = "English";
+            break;
+    }
 }
 
 
@@ -350,18 +327,17 @@ function game(userChoice, lang) {
 
     const ComputerChoice = getComputerChoice();
     
-    //now we need to compare both choices
+    // Compares both choices
     switch (userChoice + ComputerChoice) {
 
-        //cases when the user wins:
-        //yeah, I know, this way of writing the cases is way easier than what I used to do ;)
+        //user wins:
         case "rs":
         case "pr":
         case "sp":
             win(userChoice, ComputerChoice, lang);
             break;
         
-        //cases when the user loses:
+        //user loses:
         case "rp":
         case "ps":  
         case "sr":
@@ -378,12 +354,13 @@ function game(userChoice, lang) {
     }
 }
 
-// now, everytime the user clicks on one of the option images, we need to store the value of the option they picked, and then later on compare it to the computer choice
 function main() {
 
+    //changes the language when one of those divs gets clicked on
     pt_div.addEventListener('click', () => changeLang("pt"));
     eng_div.addEventListener('click', () => changeLang("eng"));
 
+    //runs the game function with the option selected by the user
     rock_div.addEventListener('click', () => game("r", language));
     paper_div.addEventListener('click', () => game("p", language));
     scissors_div.addEventListener('click', () => game("s", language)); 
