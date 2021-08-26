@@ -10,7 +10,7 @@
 <body>
 
     <header>
-        <h1>Rock Paper Scissors</h1>
+        <h1 id="msg">Rock Paper Scissors</h1>
     </header>
 
 
@@ -26,6 +26,7 @@
         <p>Paper covers rock. You win!</p>
     </div>
 
+    <p id="action-message">Make your move:</p>
 
     <div class="choices">
         <div id="r" class="choice">
@@ -40,9 +41,16 @@
             <img src="img/scissors.png" alt="" width="150px" height="150px">
         </div>
     </div>
-    
 
-    <p id="action-message">Make your move.</p>
+        
+    <div class="wrapper">
+        <h1>Select your language</h1>
+
+        <div class="btnarea">
+            <div class="mybtn" id="pt">Portuguese</div>
+            <div class="mybtn active" id="eng">English</div>
+        </div>
+    </div>
 
     <script src="app.js" charset="utf-8"></script>
 </body>
