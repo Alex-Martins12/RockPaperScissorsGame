@@ -115,3 +115,52 @@ header > h1 {
     border: 4px solid yellow;
     box-shadow: 0 0 10px rgb(192, 192, 11);
 }
+
+
+.wrapper {
+    width: 450px;
+    margin: 70px auto;
+    text-align: center;
+    color:  white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.btnarea {
+    display: flex;
+    /* centering content vertically: */
+    /* align-items: center; */
+    /* space between them (w/ display: flex) */
+    /* justify-content: space-between; */
+}
+
+.mybtn {
+    margin: 30px 40px;
+    width: 140px;
+    padding: 15px 0;
+    font-size: 20px;
+    border: 2px solid white;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.mybtn:hover {
+    transition: 0.7s ease;
+    background-color: white;
+    color: #24272e;
+    /* the lil mouse hand: */
+    cursor: pointer;
+}
+
+/* when a language is selected */
+.active {
+    background-color: white;
+    color: #24272e;
+}
+
+/* .active:hover {
+    transition: 0.7s;
+    background-color: #24272e;
+    color: white;
+} */
