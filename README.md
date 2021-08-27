@@ -8,3 +8,7 @@
  
 * Now the message changes according to what the computer and user picked!
 * I also added a translation feature, now you can change the language to Brazilian Portuguese and English
+
+How the game looks like:
+<br>
+<img height="450em" src="https://i.ibb.co/Vtw7Gmx/Rock-Paper-Scissors-Game.png" alt="Rock-Paper-Scissors-Game" border="0" />
